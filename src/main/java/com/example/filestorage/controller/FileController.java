@@ -7,9 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Optional;
@@ -20,12 +17,6 @@ public class FileController {
 
     @Autowired
     private FileRepository fileRepository;
-
-    private final Path storagePath = Paths.get("uploads");
-
-    public FileController() throws Exception {
-        Files.createDirectories(storagePath);
-    }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -47,10 +38,6 @@ public class FileController {
                         "file", existingFile.get()
                 ));
             }
-
-            // Lưu file vào thư mục
-            Path targetLocation = storagePath.resolve(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), targetLocation);
 
             // Lưu metadata vào database
             FileMetadata fileMetadata = new FileMetadata();
