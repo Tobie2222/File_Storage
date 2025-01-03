@@ -1,12 +1,15 @@
 package com.example.filestorage.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity // Thêm annotation này
-@Table(name = "file_metadata")
+@Table(name = "file_metadata", schema = "file_storage")
 public class FileMetadata {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "file_name", nullable = false, unique = true)
@@ -17,37 +20,4 @@ public class FileMetadata {
 
     @Column(name = "file_hash", nullable = false, unique = true, length = 64)
     private String fileHash;
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public Long getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(Long fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public String getFileHash() {
-        return fileHash;
-    }
-
-    public void setFileHash(String fileHash) {
-        this.fileHash = fileHash;
-    }
 }
