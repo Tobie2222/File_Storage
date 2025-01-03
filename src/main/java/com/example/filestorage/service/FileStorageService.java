@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface FileStorageService {
     FileMetadata saveFile(MultipartFile file) throws Exception;
     List<FileMetadata> getAllFiles();
-    Optional<FileMetadata> getFileByHash(String hash);
+    Optional<FileMetadata> getFileById(Long id);
 }

@@ -18,6 +18,7 @@ public class FileMetadata {
     @Column(name = "file_size", nullable = false)
     private Long fileSize;
 
-    @Column(name = "file_hash", nullable = false, unique = true, length = 64)
-    private String fileHash;
+    @Lob
+    @Column(name = "file_hash", nullable = false, unique = true, columnDefinition = "LONGBLOB")
+    private byte[] fileHash;
 }

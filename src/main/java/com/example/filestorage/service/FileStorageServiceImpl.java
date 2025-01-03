@@ -18,26 +18,13 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public FileMetadata saveFile(MultipartFile file) throws Exception {
-        // Tính hash SHA-256
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] fileHashBytes = digest.digest(file.getBytes());
-        StringBuilder hashString = new StringBuilder();
-        for (byte b : fileHashBytes) {
-            hashString.append(String.format("%02x", b));
-        }
-        String fileHash = hashString.toString();
 
-        // Kiểm tra file trùng lặp
-        Optional<FileMetadata> existingFile = fileRepository.findByFileHash(fileHash);
-        if (existingFile.isPresent()) {
-            return existingFile.get(); // Hoặc throw exception tùy bạn
-        }
 
         // Lưu metadata vào database
         FileMetadata fileMetadata = new FileMetadata();
         fileMetadata.setFileName(file.getOriginalFilename());
         fileMetadata.setFileSize(file.getSize());
-        fileMetadata.setFileHash(fileHash);
+        fileMetadata.setFileHash(file.getBytes());
         return fileRepository.save(fileMetadata);
     }
 
@@ -45,9 +32,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     public List<FileMetadata> getAllFiles() {
         return fileRepository.findAll();
     }
-    
     @Override
-    public Optional<FileMetadata> getFileByHash(String fileHash) {
-        return fileRepository.findByFileHash(fileHash);
+    public Optional<FileMetadata> getFileById(Long id) {
+        return fileRepository.findById(id);
     }
+
 }

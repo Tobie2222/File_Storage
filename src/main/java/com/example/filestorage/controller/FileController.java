@@ -37,4 +37,14 @@ public class FileController {
     public ResponseEntity<?> listFiles() {
         return ResponseEntity.ok(fileStorageService.getAllFiles());
     }
+
+    @GetMapping("/home")
+    public Map<String, String> home() {
+        return Map.of("message", "Home");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getFileById(@PathVariable Long id) {
+        return ResponseEntity.ok(fileStorageService.getFileById(id));
+    }
 }
