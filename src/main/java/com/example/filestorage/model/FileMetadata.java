@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Entity // Thêm annotation này
+@Entity
 @Table(name = "file_metadata", schema = "file_storage")
 public class FileMetadata {
     @Id
@@ -18,6 +18,7 @@ public class FileMetadata {
     @Column(name = "file_size", nullable = false)
     private Long fileSize;
 
-    @Column(name = "file_hash", nullable = false, unique = true, length = 64)
-    private String fileHash;
+    @Lob
+    @Column(name = "file_data", nullable = false)
+    private byte[] fileData;
 }
